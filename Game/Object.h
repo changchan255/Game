@@ -17,5 +17,5 @@ public:
 	SDL_Rect& getSrc();
 	SDL_Rect& getDest();
 	void CreateTexture(const char* address, SDL_Renderer* ren);
-	void virtual Render(SDL_Renderer* ren)= 0;
+	
 };

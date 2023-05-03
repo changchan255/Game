@@ -6,16 +6,18 @@ int main(int argc, char** argv)
     double first;
     double last = 0;
     g->Initialize();
+    g->MainMenu();
     while ( g->getGameState())
     {
         g->Render();
         g->Event();
+        g->Die();
         g->Update();
         first = SDL_GetTicks();
         if (first - last < 16.7)
         {
             SDL_Delay(16.7 - (first - last));
-            std::cout << 1000/(16.7 - (first - last)) + first - last << std::endl;
+            
         }
        
         last = first;

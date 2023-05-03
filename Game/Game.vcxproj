@@ -104,13 +104,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2_image\include;C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2_ttf\include;C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2_mixer\include;C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2_image\include;C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2_image\lib\x64;C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2_ttf\lib\x64;C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2_mixer\lib\x64;C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2_image\lib\x64;C:\Users\Admin\OneDrive\Máy tính\SDLGame\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,17 +131,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Base.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="GameLoop.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="TextManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Base.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="GameLoop.h" />
+    <ClInclude Include="GameOver.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Pipe.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="TextManager.h" />
     <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
