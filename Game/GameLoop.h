@@ -15,8 +15,6 @@
 #include "MainMenu.h"
 #include "GameOver.h"
 #include "TextManager.h"
-#include "Mouse.h"
-#include "Button.h"
 
 using namespace std;
 
@@ -73,10 +71,6 @@ private:
     SDL_Color white = { 250, 250, 250 };
     SDL_Color brown = { 94, 54, 67 };
 
-    Mouse* m = new Mouse;
-    enum ButtonNames { REPLAY, EXIT };
-    Button* button[2];
-    SDL_Texture* buttonTex;
 
 public:
     GameLoop();
