@@ -10,10 +10,9 @@ GameLoop::GameLoop()
     //Destination Dimension
     p.setDest(25, HEIGHT/2, 34, 24);
 
-    base1.setSource(0, 0, 350, 140);
-    base1.setDest(0, 600, 720, 120);
-    base2.setSource(0, 0, 350, 140);
-    base2.setDest(0, 600, 720, 120);
+    base1.setSource(0, 0, 720, 120);
+    base2.setSource(0, 0, 720, 120);
+    
     pipeA1.setSource(0, 0, 65, 373);
     pipeA1.setDest(400, -200, 65, 400);
     pipeB1.setSource(0, 0, 65, 373);
@@ -130,7 +129,7 @@ void GameLoop::MainMenu()
 
 void GameLoop::NewGame()
 { 
-    if (isPressed)
+    if (isPressed && isDead)
     {
         Reset();
         p.Gravity(touchBase, false);
@@ -162,10 +161,10 @@ void GameLoop::Event()
         if (event.motion.x > 220 && event.motion.x < 320 && event.motion.y > 440 && event.motion.y < 496)
         {
             isPressed = true;
-            if (isPressed)
-            {
+            
+            
                 NewGame();
-            }
+            
             
                
             
@@ -204,19 +203,20 @@ void GameLoop::Event()
         CollisionDetection();
         if (checkScore && !isDead)
         {
-            score++;
-            SCORE = score / 2;
+           
             s.setDest(73, 13, textWidth, textHeight);
             s_outline.setDest(73, 13, textWidth - 3, textHeight);
-            if (SCORE % 2 == 0)
+            score++;
+            SCORE = score;
+            if (score % 2 == 0)
             {
 
-                if (SCORE >= 10)
+                if (score >= 10)
                 {
                     s.setDest(70, 13, textWidth * 2, textHeight);
                     s_outline.setDest(70, 13, textWidth * 2 - 6, textHeight);
                 }
-                if (SCORE >= 100)
+                if (score >= 100)
                 {
                     s.setDest(70, 13, textWidth * 3, textHeight);
                     s_outline.setDest(70, 13, textWidth * 3 - 4, textHeight);
@@ -269,10 +269,10 @@ void GameLoop::Update()
     }
 
     base1.BaseUpdate1(isDead);
-    base2.BaseUpdate1(isDead);
+    base2.BaseUpdate2(isDead);
 
-    s.WriteText(std::to_string(SCORE), scoreFont, brown, renderer);
-    s_outline.WriteText(std::to_string(SCORE), scoreOutline, white, renderer);
+    s.WriteText(std::to_string(score), scoreFont, brown, renderer);
+    s_outline.WriteText(std::to_string(score), scoreOutline, white, renderer);
    
     CollisionDetection();
    
@@ -299,7 +299,7 @@ void GameLoop::Die()
 {
     if (isDead)
     {
-       
+        
      
         while (tableYpos > (HEIGHT - 282) / 3)
         {
@@ -364,7 +364,7 @@ void GameLoop::Die()
         hs.WriteText(to_string(highscore), scoreFont, brown, renderer);
         hs_outline.WriteText(to_string(highscore), hsOutline, white, renderer);
 
-        checkDie = true;
+       
     }
     
 }
@@ -428,6 +428,6 @@ void GameLoop::Clear()
     TTF_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    IMG_Quit();
+    
 
 }

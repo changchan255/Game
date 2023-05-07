@@ -49,7 +49,6 @@ private:
     bool touchBase = false;
     bool playing = false;
     bool isDead = false;
-    bool checkDie = true;
     bool checkScore = false;
     bool isPressed = false;
 

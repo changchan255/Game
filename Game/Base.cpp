@@ -7,7 +7,7 @@ void Base::BaseRender(SDL_Renderer* ren)
 
 void Base::BaseUpdate1(bool isDead)
 {
-	if (distance1 <= -540)
+	if (distance1 <= -720)
 	{
 		distance1 = 0;
 	}
@@ -17,7 +17,7 @@ void Base::BaseUpdate1(bool isDead)
 		{
 			distance1--;
 		}
-		setSource(0, 0, 350, 140);
+		
 		setDest(distance1, 600, 720, 120);
 	}
 }
@@ -26,7 +26,7 @@ void Base::BaseUpdate2(bool isDead)
 {
 	if (distance2 <= 0)
 	{
-		distance2 = 540;
+		distance2 = 720;
 	}
 	else
 	{
@@ -34,7 +34,7 @@ void Base::BaseUpdate2(bool isDead)
 		{
 			distance2--;
 		}
-		setSource(0, 0, 350, 140);
+		
 		setDest(distance2, 600, 720, 120);
 	}
 }

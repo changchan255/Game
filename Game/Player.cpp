@@ -69,7 +69,7 @@ void Player::Gravity(bool touchBase, bool playing)
 	}
 	if (!playing)
 	{
-		Ypos = 200;
+		Ypos = 300;
 		speed = 0;
 		angle = 0;
 	}
