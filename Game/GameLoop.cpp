@@ -162,11 +162,7 @@ void GameLoop::Event()
         {
             isPressed = true;
             
-            
-                NewGame();
-            
-            
-               
+             NewGame();
             
         }
         break;

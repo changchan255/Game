@@ -109,11 +109,11 @@ bool Pipe::PipeB3_Update(int incY)
 
 void Pipe::Reset()
 {
-	int pipeDistance1 = 1000;
-	int pipiDistance2 = 1300;
-	int pipeDistance3 = 1600;
-	int incY1 = 0;
-	int incY2 = 0;
-	int incY3 = 0;
+	pipeDistance1 = 1000;
+	pipeDistance2 = 1300;
+	pipeDistance3 = 1600;
+	incY1 = 0;
+	incY2 = 0;
+	incY3 = 0;
 
 }
