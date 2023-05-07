@@ -7,11 +7,12 @@ int main(int argc, char** argv)
     double last = 0;
     g->Initialize();
     g->MainMenu();
+  
     while ( g->getGameState())
     {
-        g->Render();
         g->Event();
         g->Die();
+        g->Render();
         g->Update();
         first = SDL_GetTicks();
         if (first - last < 16.7)

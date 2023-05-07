@@ -1,44 +1,61 @@
 #include "TextManager.h"
 
-void TextManager::CreateFont(const char* fileAddress, int size)
+TextManager::TextManager()
 {
-	font = TTF_OpenFont(fileAddress, size);
-	if (!font)
-	{
-		std::cout << TTF_GetError() << std::endl;
-	}
+	textSurface = NULL;
+	
 }
 
-void TextManager::Text(std::string Text, int r, int g, int b, SDL_Renderer* ren)
-{
-	char* Txt = new char[Text.size() + 1];
-	std::copy(Text.begin(), Text.end(), Txt);
-	Txt[Text.size()] = '\0';
-	SDL_Color color = { r, g, b, 255 };
-	SDL_Surface* textSurface = TTF_RenderText_Solid(font, Txt, color);
-	if (textSurface == NULL)
-	{
-		std::cout << TTF_GetError() << std::endl;
-	}
-	CreateTexture(textSurface, ren);
-	SDL_FreeSurface(textSurface);
-	delete Txt;
-	Txt = 0;
-}
-
-void TextManager::CreateTexture(SDL_Surface* surf, SDL_Renderer* ren)
-{
-	fontTexture = SDL_CreateTextureFromSurface(ren, surf);
-}
-
-void TextManager::Render(SDL_Renderer* ren, int x, int y)
-{
-	TextRect.x = x, TextRect.y = y;
-	SDL_QueryTexture(fontTexture, NULL, NULL, &TextRect.w, &TextRect.h);
-	SDL_RenderCopy(ren, fontTexture, NULL, &TextRect);
-}
-
-void TextManager::CloseFont()
+TextManager::~TextManager()
 {
 	TTF_CloseFont(font);
+	font = NULL;
+}
+
+SDL_Texture* TextManager::getTextTexture()
+{
+	return texture;
+}
+
+void TextManager::WriteText(std::string text, TTF_Font* textFont, SDL_Color color, SDL_Renderer* ren)
+{
+	if (texture != NULL)
+	{
+		SDL_DestroyTexture(texture);
+		texture = NULL;
+		font = NULL;
+	}
+
+	font = textFont;
+	if (font == NULL)
+	{
+		std::cout << "Unable to open font! Error: " << TTF_GetError() << std::endl;
+	}
+	else
+	{
+		textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
+
+		if (textSurface == NULL)
+		{
+			std::cout << "Unable to load text! Error: " << TTF_GetError() << std::endl;
+		}
+		else
+		{
+			texture = SDL_CreateTextureFromSurface(ren, textSurface);
+			if (texture == NULL)
+			{
+				std::cout << "Unable to create texture from rendered text! SDL_ttf Error: " << TTF_GetError() << std::endl;
+			}
+			else
+			{
+				TTF_SizeText(font, text.c_str(), &(getSrc().w), &(getSrc().h));
+			}
+			SDL_FreeSurface(textSurface);
+		}
+	}
+}
+
+void TextManager::Render(SDL_Renderer* ren)
+{
+	SDL_RenderCopy(ren, getTextTexture(), &getSrc(), &getDest());
 }

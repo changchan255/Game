@@ -2,17 +2,20 @@
 #include <SDL_ttf.h>
 #include <string>
 #include <iostream>
+#include "Object.h"
 
-class TextManager
+class TextManager :public Object
 {
 private:
-	TTF_Font* font;
-	SDL_Rect TextRect;
-	SDL_Texture* fontTexture;
+	SDL_Texture* texture;
+	SDL_Surface* textSurface;
 public:
-	void CreateFont(const char* fileAddress, int size);
-	void Text(std::string Text, int r, int g, int b, SDL_Renderer* ren);
-	void CreateTexture(SDL_Surface* surf, SDL_Renderer* ren);
-	void Render(SDL_Renderer* ren, int x, int y);
-	void CloseFont();
+	TextManager();
+	~TextManager();
+
+	TTF_Font* font;
+
+	SDL_Texture* getTextTexture();
+	void WriteText(std::string text, TTF_Font* textFont, SDL_Color color, SDL_Renderer* ren);
+	void Render(SDL_Renderer* ren);
 };

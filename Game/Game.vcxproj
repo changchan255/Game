@@ -132,11 +132,13 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Base.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -146,10 +148,12 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Base.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="GameLoop.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Player.h" />

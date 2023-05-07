@@ -5,7 +5,7 @@ class Base :public Object
 {
 private:
 	int distance1 = 0;
-	int distance2 = 720;
+	int distance2 = 540;
 
 public:
 	void BaseUpdate1(bool isDead);

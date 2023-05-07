@@ -4,6 +4,7 @@
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <iostream>
+#include <fstream>
 #include "TextureManager.h"
 #include "Object.h"
 #include "Player.h"
@@ -14,6 +15,9 @@
 #include "MainMenu.h"
 #include "GameOver.h"
 #include "TextManager.h"
+#include "Mouse.h"
+#include "Button.h"
+
 using namespace std;
 
 class GameLoop
@@ -26,7 +30,9 @@ private:
     Pipe pipeB1, pipeB2, pipeB3;
     MainMenu mainmenu;
     GameOver gameover;
-    TextManager score;
+    GameOver replay;
+    TextManager s, s_outline;
+    TextManager hs, hs_outline;
 
     const int HEIGHT = 720;
     const int WIDTH = 540;
@@ -46,13 +52,35 @@ private:
     bool playing = false;
     bool isDead = false;
     bool checkDie = true;
+    bool checkScore = false;
+    bool isPressed = false;
 
     int tableYpos = 600;
     double speed = 0;
     double a = 0.3;
-  
+
+    TTF_Font* scoreFont;
+    TTF_Font* scoreOutline;
+    TTF_Font* hsOutline;
+    
+    int textWidth = 35;
+    int textHeight = 50;
+    int fontSize = 32;
+    unsigned int highscore;
+    unsigned int score = 0;
+    unsigned int SCORE = 0;
+
+    SDL_Color white = { 250, 250, 250 };
+    SDL_Color brown = { 94, 54, 67 };
+
+    Mouse* m = new Mouse;
+    enum ButtonNames { REPLAY, EXIT };
+    Button* button[2];
+    SDL_Texture* buttonTex;
+
 public:
     GameLoop();
+    ~GameLoop();
     void MainMenu();
     bool getGameState();
     void NewGame();

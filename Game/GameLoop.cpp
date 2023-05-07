@@ -26,8 +26,18 @@ GameLoop::GameLoop()
     pipeA3.setDest(400, -200, 65, 400);
     pipeB3.setSource(0, 0, 65, 373);
     pipeB3.setDest(400, 350, 65, 400);
-    gameover.setSource(0, 0, 250, 209);
+    gameover.setSource(0, 0, 444, 282);
+    replay.setSource(0, 0, 100, 56);
+    s.setSource(0, 0, NULL, NULL);
+    s_outline.setSource(0, 0, NULL, NULL);
+    hs.setSource(0, 0, NULL, NULL);
+    hs_outline.setSource(0, 0, NULL, NULL);
+
+   
 }
+
+
+
 
 bool GameLoop::getGameState()
 {
@@ -40,9 +50,10 @@ void GameLoop::Initialize()
     window = SDL_CreateWindow("Flappy Bird", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
     if (window)
     {
-        renderer = SDL_CreateRenderer(window, -1, 0);
+        renderer = SDL_CreateRenderer(window, -1, 0); 
         if (renderer)
         {
+           
             cout << "Succeeded!" << endl;
             GameState = true;
             p.CreateTexture("Image/chim1.png", renderer);
@@ -58,7 +69,9 @@ void GameLoop::Initialize()
             pipeB2.CreateTexture("Image/pipe_Below.png", renderer);
             pipeB3.CreateTexture("Image/pipe_Below.png", renderer);
             gameover.CreateTexture("Image/gameOver.png", renderer);
-            score.CreateFont("Font/font.ttf", 16);
+            replay.CreateTexture("Image/replay.png", renderer);
+
+           
 
         }
         else
@@ -70,6 +83,33 @@ void GameLoop::Initialize()
     {
         cout << "Window not created!" << endl;
     }
+
+    if (TTF_Init() < 0)
+    {
+        cout << "Text could not initialize! Text_Error: " << TTF_GetError() << endl;
+        Clear();
+    }
+    else
+    {
+        scoreFont = TTF_OpenFont("Font/font.ttf", fontSize);
+        scoreOutline = TTF_OpenFont("Font/font.ttf", fontSize);
+        TTF_SetFontOutline(scoreOutline, 10);
+        hsOutline = TTF_OpenFont("Font/font.ttf", fontSize);
+        TTF_SetFontOutline(hsOutline, 10);
+    }
+
+    ifstream file("Highscore.txt");
+    if (!file.is_open())
+    {
+        cout << "Unable to open highscore file!";
+        Clear();
+    }
+    else
+    {
+        file.close();
+    }
+
+  
 }
 
 void GameLoop::MainMenu()
@@ -88,77 +128,152 @@ void GameLoop::MainMenu()
     }
 }
 
+void GameLoop::NewGame()
+{ 
+    if (isPressed)
+    {
+        Reset();
+        p.Gravity(touchBase, false);
+        score = 0;
+        SCORE = 0;
+        touchBase = true;
+        playing = false;
+        isDead = false;
+        checkScore = false;
+        tableYpos = 600;
+        speed = 0;
+        a = 0.3;
+        gameover.setDest(0, 0, NULL, NULL);
+        s.setDest(73, 13, textWidth, textHeight);
+        s_outline.setDest(73, 13, textWidth - 3, textHeight);
+    }
 
+}
 
 void GameLoop::Event()
 {
     SDL_PollEvent(&event);
-    if (event.type == SDL_QUIT)
+    switch (event.type)
+    {
+        if (isDead)
+        {
+    case SDL_MOUSEBUTTONDOWN:
+    {
+        if (event.motion.x > 220 && event.motion.x < 320 && event.motion.y > 440 && event.motion.y < 496)
+        {
+            isPressed = true;
+            if (isPressed)
+            {
+                NewGame();
+            }
+            
+               
+            
+        }
+        break;
+    }
+        }
+        else
+        {
+    case SDL_KEYDOWN:
+    {
+        if (event.key.keysym.sym == SDLK_SPACE)
+        {
+            if (!p.JumpState() && !isDead)
+            {
+                p.Jump();
+            }
+            if (!isDead)
+            {
+                playing = true;
+                isDead = false;
+                touchBase = false;
+            }
+        }
+        break;
+    }
+    case SDL_QUIT:
     {
         GameState = false;
+        break;
     }
-    else if (event.key.keysym.sym == SDLK_SPACE)
-    {
-        if (!p.JumpState() && !isDead)
-        {
-            p.Jump();
         }
-        if(!isDead)
-        {
-            playing = true;
-            isDead = false;
-            touchBase = false;
-        }
-    }
-    else
+    default:
     {
         Update();
         CollisionDetection();
+        if (checkScore && !isDead)
+        {
+            score++;
+            SCORE = score / 2;
+            s.setDest(73, 13, textWidth, textHeight);
+            s_outline.setDest(73, 13, textWidth - 3, textHeight);
+            if (SCORE % 2 == 0)
+            {
+
+                if (SCORE >= 10)
+                {
+                    s.setDest(70, 13, textWidth * 2, textHeight);
+                    s_outline.setDest(70, 13, textWidth * 2 - 6, textHeight);
+                }
+                if (SCORE >= 100)
+                {
+                    s.setDest(70, 13, textWidth * 3, textHeight);
+                    s_outline.setDest(70, 13, textWidth * 3 - 4, textHeight);
+                }
+            }
+            checkScore = false;
+        }
+        break;
     }
-    
-    
+   
+    }
 }
+   
 void GameLoop::Update()
 {
     p.Gravity(touchBase, playing);
     
-    std::string s;
-    s = "Score" + std::to_string(points);
-    score.Text(s, 255, 255, 255, renderer);
-
     bool flag1 = false, flag2 = false;
-    flag1 = pipeA1.PipeA1_Update(var1, points);
+    flag1 = pipeA1.PipeA1_Update(var1);
     flag2 = pipeB1.PipeB1_Update(var1);
     if (flag1 && flag2)
     {
         srand(SDL_GetTicks());
         var1 = rand() % 201 - 100;
-        pipeA1.PipeA1_Update(var1, points);
+        pipeA1.PipeA1_Update(var1);
         pipeB1.PipeB1_Update(var1);
+        checkScore = true;
     }
 
-    flag1 = pipeA2.PipeA2_Update(var1, points);
-    flag2 = pipeB2.PipeB2_Update(var1);
+    flag1 = pipeA2.PipeA2_Update(var2);
+    flag2 = pipeB2.PipeB2_Update(var2);
     if (flag1 && flag2)
     {
         srand(SDL_GetTicks());
         var2 = rand() % 201 - 100;
-        pipeA2.PipeA2_Update(var1, points);
-        pipeB2.PipeB2_Update(var1);
+        pipeA2.PipeA2_Update(var2);
+        pipeB2.PipeB2_Update(var2);
+        checkScore = true;
     }
 
-    flag1 = pipeA3.PipeA3_Update(var1, points);
-    flag2 = pipeB3.PipeB3_Update(var1);
+    flag1 = pipeA3.PipeA3_Update(var3);
+    flag2 = pipeB3.PipeB3_Update(var3);
     if (flag1 && flag2)
     {
         srand(SDL_GetTicks());
         var3 = rand() % 201 - 100;
-        pipeA3.PipeA3_Update(var1, points);
-        pipeB3.PipeB3_Update(var1);
+        pipeA3.PipeA3_Update(var3);
+        pipeB3.PipeB3_Update(var3);
+        checkScore = true;
     }
 
     base1.BaseUpdate1(isDead);
     base2.BaseUpdate1(isDead);
+
+    s.WriteText(std::to_string(SCORE), scoreFont, brown, renderer);
+    s_outline.WriteText(std::to_string(SCORE), scoreOutline, white, renderer);
+   
     CollisionDetection();
    
 }
@@ -176,29 +291,87 @@ void GameLoop::CollisionDetection()
         isDead = true;
         touchBase = true;
     }
+
+   
 }
 
 void GameLoop::Die()
 {
     if (isDead)
     {
-        SDL_Delay(500);
+       
      
         while (tableYpos > (HEIGHT - 282) / 3)
         {
+            s.setDest(0, 0, NULL, NULL);
+            s_outline.setDest(0, 0, NULL, NULL);
+
             tableYpos -= speed / 5;
             speed += a;
-            gameover.setDest((WIDTH - 250)/2, tableYpos, 250, 209);
+            gameover.setDest((WIDTH - 444)/2, tableYpos, 438, 290);
+            replay.setDest((WIDTH - 100) / 2, 440, 100, 56);
             Render();
         }
         
+        ifstream read("HighScore.txt");
+        read >> highscore;
+        read.close();
+        if (SCORE > highscore)
+        {
+            highscore = SCORE;
         
+           
+
+            ofstream file("HighScore.txt");
+            file << SCORE;
+            file.close();
+        }
+        textWidth = 47;
+        textHeight = 67;
+        if (SCORE >= 100)
+        {
+            s.setDest(120, 255, textWidth * 3, textHeight);
+            s_outline.setDest(120, 255, textWidth * 3 - 5, textHeight);
+        }
+        else if (SCORE >= 10)
+        {
+            s.setDest(145, 255, textWidth * 2, textHeight);
+            s_outline.setDest(145, 255, textWidth * 2 - 5, textHeight);
+        }
+        else
+        {
+            s.setDest(170, 255, textWidth, textHeight);
+            s_outline.setDest(170, 255, textWidth - 5, textHeight);
+        }
+
+        textWidth /= 1.55;
+        textHeight /= 1.55;
+        if (highscore >= 100)
+        {
+            hs.setDest(323, 235, textWidth * 3, textHeight);
+            hs_outline.setDest(323, 235, textWidth * 3 - 5, textHeight);
+        }
+        else if (highscore >= 10)
+        {
+            hs.setDest(340, 235, textWidth * 2, textHeight);
+            hs_outline.setDest(340, 235, textWidth * 2 - 3, textHeight);
+        }
+        else
+        {
+            hs.setDest(353, 235, textWidth, textHeight);
+            hs_outline.setDest(353, 235, textWidth - 3, textHeight);
+        }
+        hs.WriteText(to_string(highscore), scoreFont, brown, renderer);
+        hs_outline.WriteText(to_string(highscore), hsOutline, white, renderer);
+
+        checkDie = true;
     }
+    
 }
 
 void GameLoop::Reset()
 {
-     points = 0;
+     
      var1 = rand() % 201 - 100;
      var2 = rand() % 201 - 100;
      var3 = rand() % 201 - 100;
@@ -221,14 +394,26 @@ void GameLoop::Render()
     pipeB2.PipeRender(renderer);
     pipeA3.PipeRender(renderer);
     pipeB3.PipeRender(renderer);
-    score.Render(renderer, 270, 10);
     p.Render(renderer);
     base1.BaseRender(renderer);
     base2.BaseRender(renderer);
     
     if (isDead)
     {
+        
         gameover.Render(renderer, 0);
+        replay.Render(renderer, 0);
+        s_outline.Render(renderer);
+        s.Render(renderer);
+        hs_outline.Render(renderer);
+        hs.Render(renderer);
+
+       
+    }
+    if(!isDead)
+    {
+        s_outline.Render(renderer);
+        s.Render(renderer);
     }
 
     SDL_RenderPresent(renderer);
@@ -239,9 +424,10 @@ void GameLoop::Render()
 
 void GameLoop::Clear()
 {
-    score.CloseFont();
+    
     TTF_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    IMG_Quit();
 
 }
