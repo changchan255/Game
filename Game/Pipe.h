@@ -11,12 +11,12 @@ private:
 	int incY2 = 0;
 	int incY3 = 0;
 public:
-	bool PipeA1_Update(int incY);
-	bool PipeB1_Update(int incY);
-	bool PipeA2_Update(int inc);
-	bool PipeB2_Update(int incY);
-	bool PipeA3_Update(int incY);
-	bool PipeB3_Update(int incY);
+	bool PipeA1_Update(int incY, bool isDead);
+	bool PipeB1_Update(int incY, bool isDead);
+	bool PipeA2_Update(int inc, bool isDead);
+	bool PipeB2_Update(int incY, bool isDead);
+	bool PipeA3_Update(int incY, bool isDead);
+	bool PipeB3_Update(int incY, bool isDead);
 	void PipeRender(SDL_Renderer *ren);
 	void Reset();
 };

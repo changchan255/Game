@@ -104,7 +104,7 @@ bool Player::JumpState()
 
 void Player::Reset()
 {
-	Ypos = 200;
+	Ypos = 300;
 	lastJump = 0;
 }
 

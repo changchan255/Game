@@ -49,6 +49,7 @@ private:
     bool touchBase = false;
     bool playing = false;
     bool isDead = false;
+    bool checkDie = false;
     bool checkScore = false;
     bool isPressed = false;
 
@@ -69,6 +70,16 @@ private:
 
     SDL_Color white = { 250, 250, 250 };
     SDL_Color brown = { 94, 54, 67 };
+
+   
+    Mix_Music* ingamesound;
+    Mix_Chunk* clickSound;
+    Mix_Chunk* wingSound;
+    Mix_Chunk* pointSound;
+    Mix_Music* hitSound;
+    Mix_Music* dieSound;
+    Mix_Music* swooshingSound;
+
 
 
 public:

@@ -7,5 +7,6 @@ private:
 	
 public:
 	void Render(SDL_Renderer* ren);
+	void SoundRender(SDL_Renderer* ren);
 };
 

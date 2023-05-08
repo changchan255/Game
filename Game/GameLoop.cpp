@@ -108,36 +108,76 @@ void GameLoop::Initialize()
         file.close();
     }
 
-  
+    if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG) < 0)
+    {
+        cout << "Sound could not initialize! Mix_Error: " << Mix_GetError() << endl;
+        Clear();
+    }
+    else if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0) 
+    {
+        cout << "Sound could not initialize! Mix_Error: " << Mix_GetError() << endl;
+        Clear();
+    }
+    else
+    {
+        
+        ingamesound = Mix_LoadMUS("Sound/ingame.mp3");
+        clickSound = Mix_LoadWAV("Sound/mouse_click.wav");
+        wingSound = Mix_LoadWAV("Sound/sfx_wing.wav");
+        pointSound = Mix_LoadWAV("Sound/sfx_point.wav");
+        hitSound = Mix_LoadMUS("Sound/sfx_hit.wav");
+        dieSound = Mix_LoadMUS("Sound/sfx_die.wav");
+        swooshingSound = Mix_LoadMUS("Sound/sfx_swooshing.wav");
+        
+    }
+
 }
 
 void GameLoop::MainMenu()
 {
     mainmenu.Initialize(renderer);
+    
     while (!mainmenu.getClicked())
-    {
+    {   
+       
         if (mainmenu.EventHandling(event) == -1)
         {
             GameState = false;
             break;
         }
+        if (mainmenu.EventHandling(event) == 0)
+        {
+           
+            if (mainmenu.getPlayed())
+            {
+                Mix_VolumeMusic(10);
+            }
+            else
+            {
+                Mix_VolumeMusic(0);
+            }
+        }
         SDL_RenderClear(renderer);
         mainmenu.MenuRender(renderer);
+        mainmenu.SoundRender(renderer);
         SDL_RenderPresent(renderer);
     }
+    
 }
 
 void GameLoop::NewGame()
 { 
-    if (isPressed && isDead)
+    if ( checkDie && isPressed)
     {
         Reset();
         p.Gravity(touchBase, false);
         score = 0;
         SCORE = 0;
+        isPressed = false;
         touchBase = true;
         playing = false;
         isDead = false;
+        checkDie = false;
         checkScore = false;
         tableYpos = 600;
         speed = 0;
@@ -155,13 +195,17 @@ void GameLoop::Event()
     switch (event.type)
     {
         if (isDead)
-        {
+        { 
+    
+
     case SDL_MOUSEBUTTONDOWN:
     {
+        Mix_VolumeChunk(clickSound, 10);
+        Mix_PlayChannel(1, clickSound, 0);
         if (event.motion.x > 220 && event.motion.x < 320 && event.motion.y > 440 && event.motion.y < 496)
         {
-            isPressed = true;
             
+            isPressed = true;
              NewGame();
             
         }
@@ -177,8 +221,10 @@ void GameLoop::Event()
             if (!p.JumpState() && !isDead)
             {
                 p.Jump();
+                Mix_VolumeChunk(wingSound, 20);
+                Mix_PlayChannel(1, wingSound, 0);
             }
-            if (!isDead)
+            if (!checkDie)
             {
                 playing = true;
                 isDead = false;
@@ -204,20 +250,20 @@ void GameLoop::Event()
             s_outline.setDest(73, 13, textWidth - 3, textHeight);
             score++;
             SCORE = score;
-            if (score % 2 == 0)
-            {
-
-                if (score >= 10)
+            
+                Mix_VolumeChunk(pointSound, 15);
+                Mix_PlayChannel(2, pointSound, 0);
+                if (SCORE >= 10)
                 {
                     s.setDest(70, 13, textWidth * 2, textHeight);
                     s_outline.setDest(70, 13, textWidth * 2 - 6, textHeight);
                 }
-                if (score >= 100)
+                if (SCORE >= 100)
                 {
                     s.setDest(70, 13, textWidth * 3, textHeight);
                     s_outline.setDest(70, 13, textWidth * 3 - 4, textHeight);
                 }
-            }
+            
             checkScore = false;
         }
         break;
@@ -231,36 +277,36 @@ void GameLoop::Update()
     p.Gravity(touchBase, playing);
     
     bool flag1 = false, flag2 = false;
-    flag1 = pipeA1.PipeA1_Update(var1);
-    flag2 = pipeB1.PipeB1_Update(var1);
+    flag1 = pipeA1.PipeA1_Update(var1, isDead);
+    flag2 = pipeB1.PipeB1_Update(var1, isDead);
     if (flag1 && flag2)
     {
         srand(SDL_GetTicks());
         var1 = rand() % 201 - 100;
-        pipeA1.PipeA1_Update(var1);
-        pipeB1.PipeB1_Update(var1);
+        pipeA1.PipeA1_Update(var1, isDead);
+        pipeB1.PipeB1_Update(var1, isDead);
         checkScore = true;
     }
 
-    flag1 = pipeA2.PipeA2_Update(var2);
-    flag2 = pipeB2.PipeB2_Update(var2);
+    flag1 = pipeA2.PipeA2_Update(var2, isDead);
+    flag2 = pipeB2.PipeB2_Update(var2, isDead);
     if (flag1 && flag2)
     {
         srand(SDL_GetTicks());
         var2 = rand() % 201 - 100;
-        pipeA2.PipeA2_Update(var2);
-        pipeB2.PipeB2_Update(var2);
+        pipeA2.PipeA2_Update(var2, isDead);
+        pipeB2.PipeB2_Update(var2, isDead);
         checkScore = true;
     }
 
-    flag1 = pipeA3.PipeA3_Update(var3);
-    flag2 = pipeB3.PipeB3_Update(var3);
+    flag1 = pipeA3.PipeA3_Update(var3, isDead);
+    flag2 = pipeB3.PipeB3_Update(var3, isDead);
     if (flag1 && flag2)
     {
         srand(SDL_GetTicks());
         var3 = rand() % 201 - 100;
-        pipeA3.PipeA3_Update(var3);
-        pipeB3.PipeB3_Update(var3);
+        pipeA3.PipeA3_Update(var3, isDead);
+        pipeB3.PipeB3_Update(var3, isDead);
         checkScore = true;
     }
 
@@ -270,7 +316,7 @@ void GameLoop::Update()
     s.WriteText(std::to_string(score), scoreFont, brown, renderer);
     s_outline.WriteText(std::to_string(score), scoreOutline, white, renderer);
    
-    CollisionDetection();
+  
    
 }
 
@@ -293,8 +339,13 @@ void GameLoop::CollisionDetection()
 
 void GameLoop::Die()
 {
-    if (isDead)
+    if (isDead && !checkDie)
     {
+        Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+        Mix_VolumeMusic(20);
+        Mix_PlayMusic(hitSound, 0);
+        SDL_Delay(500);
+        Mix_PlayMusic(dieSound, 0);
         
      
         while (tableYpos > (HEIGHT - 282) / 3)
@@ -360,7 +411,7 @@ void GameLoop::Die()
         hs.WriteText(to_string(highscore), scoreFont, brown, renderer);
         hs_outline.WriteText(to_string(highscore), hsOutline, white, renderer);
 
-       
+        checkDie = true;
     }
     
 }
@@ -371,7 +422,7 @@ void GameLoop::Reset()
      var1 = rand() % 201 - 100;
      var2 = rand() % 201 - 100;
      var3 = rand() % 201 - 100;
-     p.Reset();
+    
      pipeA1.Reset();
      pipeB1.Reset();
      pipeA2.Reset();
@@ -422,6 +473,7 @@ void GameLoop::Clear()
 {
     
     TTF_Quit();
+    Mix_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     

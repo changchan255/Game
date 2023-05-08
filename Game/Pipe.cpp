@@ -5,7 +5,7 @@ void Pipe::PipeRender(SDL_Renderer* ren)
 	SDL_RenderCopy(ren, getTexture(), &getSrc(), &getDest());
 }
 
-bool Pipe::PipeA1_Update(int incY)
+bool Pipe::PipeA1_Update(int incY, bool isDead)
 {
 	this->incY1 = incY;
 	if (pipeDistance1 <= -100)
@@ -15,14 +15,17 @@ bool Pipe::PipeA1_Update(int incY)
 	}
 	else
 	{
-		pipeDistance1 -= 2;
-		setSource(0, 0, 65, 373);
-		setDest(pipeDistance1, -200 + this->incY1, 65, 400);
-		return false;
+		if (!isDead)
+		{
+			pipeDistance1 -= 2;
+			setSource(0, 0, 65, 373);
+			setDest(pipeDistance1, -200 + this->incY1, 65, 400);
+			return false;
+		}
 	}
 }
 
-bool Pipe::PipeB1_Update(int incY)
+bool Pipe::PipeB1_Update(int incY, bool isDead)
 {
 	this->incY1 = incY;
 	if (pipeDistance1 <= -100)
@@ -32,14 +35,17 @@ bool Pipe::PipeB1_Update(int incY)
 	}
 	else
 	{
-		pipeDistance1 -= 2;
-		setSource(0, 0, 65, 373);
-		setDest(pipeDistance1, 350 + this->incY1, 65, 400);
-		return false;
+		if (!isDead)
+		{
+			pipeDistance1 -= 2;
+			setSource(0, 0, 65, 373);
+			setDest(pipeDistance1, 350 + this->incY1, 65, 400);
+			return false;
+		}
 	}
 }
 
-bool Pipe::PipeA2_Update(int incY)
+bool Pipe::PipeA2_Update(int incY, bool isDead)
 {
 	this->incY2 = incY;
 	if (pipeDistance2 <= -100)
@@ -49,14 +55,17 @@ bool Pipe::PipeA2_Update(int incY)
 	}
 	else
 	{
-		pipeDistance2 -= 2;
-		setSource(0, 0, 65, 373);
-		setDest(pipeDistance2, -200 + this->incY2, 65, 400);
-		return false;
+		if (!isDead)
+		{
+			pipeDistance2 -= 2;
+			setSource(0, 0, 65, 373);
+			setDest(pipeDistance2, -200 + this->incY2, 65, 400);
+			return false;
+		}
 	}
 }
 
-bool Pipe::PipeB2_Update(int incY)
+bool Pipe::PipeB2_Update(int incY, bool isDead)
 {
 	this->incY2 = incY;
 	if (pipeDistance2 <= -100)
@@ -66,14 +75,17 @@ bool Pipe::PipeB2_Update(int incY)
 	}
 	else
 	{
-		pipeDistance2 -= 2;
-		setSource(0, 0, 65, 373);
-		setDest(pipeDistance2, 350 + this->incY2, 65, 400);
-		return false;
+		if (!isDead)
+		{
+			pipeDistance2 -= 2;
+			setSource(0, 0, 65, 373);
+			setDest(pipeDistance2, 350 + this->incY2, 65, 400);
+			return false;
+		}
 	}
 }
 
-bool Pipe::PipeA3_Update(int incY)
+bool Pipe::PipeA3_Update(int incY, bool isDead)
 {
 	this->incY3 = incY;
 	if (pipeDistance3 <= -100)
@@ -83,13 +95,16 @@ bool Pipe::PipeA3_Update(int incY)
 	}
 	else
 	{
-		pipeDistance3 -= 2;
-		setSource(0, 0, 65, 373);
-		setDest(pipeDistance3, -200 + this->incY3, 65, 400);
-		return false;
+		if (!isDead)
+		{
+			pipeDistance3 -= 2;
+			setSource(0, 0, 65, 373);
+			setDest(pipeDistance3, -200 + this->incY3, 65, 400);
+			return false;
+		}
 	}
 }
-bool Pipe::PipeB3_Update(int incY)
+bool Pipe::PipeB3_Update(int incY, bool isDead)
 {
 	this->incY3 = incY;
 	if (pipeDistance3 <= -100)
@@ -99,10 +114,13 @@ bool Pipe::PipeB3_Update(int incY)
 	}
 	else
 	{
-		pipeDistance3 -= 2;
-		setSource(0, 0, 65, 373);
-		setDest(pipeDistance3, 350 + this->incY3, 65, 400);
-		return false;
+		if (!isDead)
+		{
+			pipeDistance3 -= 2;
+			setSource(0, 0, 65, 373);
+			setDest(pipeDistance3, 350 + this->incY3, 65, 400);
+			return false;
+		}
 	}
 }
 
