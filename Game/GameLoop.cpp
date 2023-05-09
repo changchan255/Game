@@ -162,6 +162,11 @@ void GameLoop::MainMenu()
         mainmenu.SoundRender(renderer);
         SDL_RenderPresent(renderer);
     }
+    if (mainmenu.getClicked())
+    {
+        Mix_HaltMusic();
+        Mix_PlayMusic(ingamesound, -1);
+    }
     
 }
 
@@ -169,6 +174,7 @@ void GameLoop::NewGame()
 { 
     if ( checkDie && isPressed)
     {
+        Mix_PlayMusic(ingamesound, -1);
         Reset();
         p.Gravity(touchBase, false);
         score = 0;
@@ -240,6 +246,7 @@ void GameLoop::Event()
     }
         }
     default:
+
     {
         Update();
         CollisionDetection();
