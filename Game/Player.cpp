@@ -55,7 +55,7 @@ void Player::Gravity(bool touchBase, bool playing)
 	}
 	
 	speed += gravity / 2.5;
-	setDest(110, Ypos, 68, 48);
+	setDest(110, Ypos, 75, 65);
 	SetCoordinate(10, 12);
 	angle = (speed / 2) * 10 - 5;
 

@@ -5,17 +5,17 @@ MainMenu::MainMenu()
 	isClicked = false;
 	isPlay = true;
 	soundOn.setSource(0, 0, 32, 24);
-	soundOn.setDest(450, 575, 32, 24);
+	soundOn.setDest(415, 500, 60, 48);
 	soundOff.setSource(0, 24, 32, 24);
-	soundOff.setDest(450, 575, 32, 24);
+	soundOff.setDest(415, 500, 60, 48);
 }
 
 void MainMenu::Initialize(SDL_Renderer* ren)
 {
-	MenuBg.CreateTexture("Image/MainMenu.png", ren);
+	MenuBg.CreateTexture("Image/main.png", ren);
 	soundOn.CreateTexture("Image/sound.png", ren);
 	soundOff.CreateTexture("Image/sound.png", ren);
-	backgroundsound = Mix_LoadMUS("Sound/bg.mp3");
+	backgroundsound = Mix_LoadMUS("Sound/cupid.mp3");
 	Mix_PlayMusic(backgroundsound, -1);
 }
 
@@ -26,11 +26,11 @@ int MainMenu::EventHandling(SDL_Event& e)
 	{
 		return -1;
 	}
-	else if (e.type == SDL_MOUSEBUTTONDOWN && e.motion.x > 196 && e.motion.x < 344 && e.motion.y > 575 && e.motion.y < 627)
+	else if (e.type == SDL_MOUSEBUTTONDOWN && e.motion.x > 180 && e.motion.x < 360 && e.motion.y > 500 && e.motion.y < 552)
 	{
 		isClicked = true;
 	}
-	else if (e.type == SDL_MOUSEBUTTONDOWN && e.motion.x > 450 && e.motion.x < 482 && e.motion.y > 575 && e.motion.y < 627)
+	else if (e.type == SDL_MOUSEBUTTONDOWN && e.motion.x > 415 && e.motion.x < 479 && e.motion.y > 500 && e.motion.y < 548)
 	{
 	
 		isPlay = !isPlay;

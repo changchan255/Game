@@ -6,12 +6,12 @@ GameLoop::GameLoop()
     renderer = NULL;
     GameState = false;
     //Source Dimension
-    p.setSource(0, 0, 34, 24);
+    p.setSource(0, 0, 95, 85);
     //Destination Dimension
-    p.setDest(25, HEIGHT/2, 34, 24);
+    p.setDest(25, 300, 75, 65);
 
-    base1.setSource(0, 0, 720, 120);
-    base2.setSource(0, 0, 720, 120);
+    base1.setSource(0, 0, 1162, 305);
+    base2.setSource(0, 0, 1162, 305);
     
     pipeA1.setSource(0, 0, 65, 373);
     pipeA1.setDest(400, -200, 65, 400);
@@ -58,9 +58,9 @@ void GameLoop::Initialize()
             p.CreateTexture("Image/chim1.png", renderer);
             p.CreateTexture1("Image/chim2.png", renderer);
             p.CreateTexture2("Image/chim3.png", renderer);
-            b.CreateTexture("Image/background.png", renderer);
-            base1.CreateTexture("Image/land.png", renderer);
-            base2.CreateTexture("Image/land.png", renderer);
+            b.CreateTexture("Image/bg.png", renderer);
+            base1.CreateTexture("Image/bs.png", renderer);
+            base2.CreateTexture("Image/bs.png", renderer);
             pipeA1.CreateTexture("Image/pipe_Above.png", renderer);
             pipeA2.CreateTexture("Image/pipe_Above.png", renderer);
             pipeA3.CreateTexture("Image/pipe_Above.png", renderer);
@@ -429,7 +429,7 @@ void GameLoop::Reset()
      var1 = rand() % 201 - 100;
      var2 = rand() % 201 - 100;
      var3 = rand() % 201 - 100;
-    
+     p.Reset();
      pipeA1.Reset();
      pipeB1.Reset();
      pipeA2.Reset();
