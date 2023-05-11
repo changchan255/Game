@@ -217,12 +217,13 @@ void GameLoop::Event()
         }
         break;
     }
+    
         }
         else
         {
     case SDL_KEYDOWN:
     {
-        if (event.key.keysym.sym == SDLK_SPACE)
+        if (event.key.keysym.sym == SDLK_SPACE || event.key.keysym.sym == SDLK_UP)
         {
             if (!p.JumpState() && !isDead)
             {
@@ -483,6 +484,7 @@ void GameLoop::Clear()
     Mix_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    
     
 
 }
