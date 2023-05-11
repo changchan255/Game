@@ -37,7 +37,7 @@ Click here to <b>DOWNLOAD</b>:
 
  
 
- #  Credits
+ #  Contributor
 Special thanks to:
 - [**Askari Hassan**](https://www.youtube.com/channel/UC2Ab_b49frkmgFJajOvtkpw/featured)
 - [**Lazy Foo' Productions**](https://lazyfoo.net/tutorials/SDL)
