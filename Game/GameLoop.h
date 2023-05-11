@@ -80,7 +80,7 @@ private:
     Mix_Music* dieSound;
     Mix_Music* swooshingSound;
 
-
+    SDL_Surface* icon;
 
 public:
     GameLoop();

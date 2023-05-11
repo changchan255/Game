@@ -47,6 +47,8 @@ void GameLoop::Initialize()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
     window = SDL_CreateWindow("Flappy Bird", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+    icon = IMG_Load("Image/icon.png");
+    SDL_SetWindowIcon(window, icon);
     if (window)
     {
         renderer = SDL_CreateRenderer(window, -1, 0); 
@@ -69,7 +71,7 @@ void GameLoop::Initialize()
             pipeB3.CreateTexture("Image/pipe_Below.png", renderer);
             gameover.CreateTexture("Image/gameOver.png", renderer);
             replay.CreateTexture("Image/replay.png", renderer);
-
+            
            
 
         }
@@ -484,7 +486,7 @@ void GameLoop::Clear()
     Mix_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    
+    SDL_FreeSurface(icon);
     
 
 }
