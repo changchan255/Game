@@ -1,5 +1,17 @@
+<h1 align="center">
+      FLAPPY BIRD 
+
+</h1>
+<p align= "center">
+  Advanced Programing course 's Major Assignment
+ </p>
+ 
 # Introduction
 * A clone of Flappy Bird -  a hit's game developed by Nguyen Ha Dong in 2013 - using C++ and [SDL2](https://www.libsdl.org/download-2.0.php).
+
+<p align="center"><a href="https://github.com/20021515/FlappyChim-2.0"><img width="40%" src="https://github.com/changchan255/Game/assets/124891537/02ef4bf9-22b0-4d0b-b25c-4cac2cee1165"></a></p>
+<br>
+</p>
 
 _*The resources used in the game are collected from the Internet and most of them have been edited to suit the property of the game._
 
