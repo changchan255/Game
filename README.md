@@ -9,7 +9,7 @@
 # Introduction
 * A clone of Flappy Bird -  a hit's game developed by Nguyen Ha Dong in 2013 - using C++ and [SDL2](https://www.libsdl.org/download-2.0.php).
 
-<p align="center"><a href="https://github.com/20021515/FlappyChim-2.0"><img width="40%" src="https://github.com/changchan255/Game/assets/124891537/02ef4bf9-22b0-4d0b-b25c-4cac2cee1165"></a></p>
+<p align="center"><a href="https://github.com/changchan255/Game"><img width="40%" src="https://github.com/changchan255/Game/assets/124891537/02ef4bf9-22b0-4d0b-b25c-4cac2cee1165"></a></p>
 <br>
 </p>
 
@@ -28,10 +28,14 @@ _*The resources used in the game are collected from the Internet and most of the
  ![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzc2NWI2NzM3MDc5MmIzZDhmZjA2ZTM2MGUzMDE5YmYxMGE1ZWY3ZSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/yax4pPzeEZ676MUdpU/giphy.gif)
 #  Installation
 Click here to <b>DOWNLOAD</b>:
+
 <p align="center">
+       <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjA0YmUxMTlhMzU2NmJlZWMwNzYyZmNmY2RmZTQ5MTdjOWYxYjQxNCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/hi10S2Kh16UE8JWkGk/giphy.gif" width="80" height="80" />
    <a href="https://github.com/changchan255/Game/releases/tag/Latest">
-     <b>INSTALL</b>
+         <b>INSTALL</b>
+         
   </a>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjA0YmUxMTlhMzU2NmJlZWMwNzYyZmNmY2RmZTQ5MTdjOWYxYjQxNCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/hi10S2Kh16UE8JWkGk/giphy.gif" width="80" height="80" />
     </p>
         
 
